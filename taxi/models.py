@@ -18,7 +18,8 @@ class Manufacturer(models.Model):
 class Car(models.Model):
     model = models.CharField(max_length=255)
     manufacturer = models.ForeignKey(Manufacturer,
-                                     on_delete=models.CASCADE)
+                                     on_delete=models.CASCADE,
+                                     related_name="cars")
     drivers = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                      related_name="cars")
 
@@ -26,7 +27,7 @@ class Car(models.Model):
         ordering = ("manufacturer", )
 
     def __str__(self):
-        return self.manufacturer, self.model
+        return f"{self.manufacturer} {self.model}"
 
 
 class Driver(AbstractUser):
